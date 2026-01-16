@@ -133,8 +133,8 @@ async function setTrckrVariable(messageId: number) {
   
   setVariable('trckr', JSON.stringify(trackerData));
 
-  context.chatMetadata.trckr = JSON.stringify(trackerData);
-  context.saveMetadataDebounced();
+  //context.chatMetadata.trckr = JSON.stringify(trackerData);
+  //context.saveMetadataDebounced();
   st_echo('success', 'trckr variable set in chat metadata.');
 }
 
