@@ -133,15 +133,9 @@ async function setTrckrVariable(messageId: number) {
     // Dynamically import from SillyTavern's variables.js module
     // @ts-ignore - SillyTavern runtime module, handled by webpack externals
     const variablesModule = await import('../../../../variables.js');
-    // @ts-ignore - Access default export which should contain setVariable
-    const setVariable = variablesModule.default || variablesModule;
-    if (typeof setVariable === 'function') {
-      setVariable('trckr', JSON.stringify(trackerData));
-      st_echo('success', 'trckr variable set. Access with /getvar trckr or {{var::trckr}}.');
-    } else {
-      console.error('setVariable not found in module:', variablesModule);
-      st_echo('error', 'setVariable function not available. Check console for details.');
-    }
+    // @ts-ignore - Access setLocalVariable function from imported module
+    variablesModule.setLocalVariable('trckr', JSON.stringify(trackerData));
+    st_echo('success', 'trckr variable set. Access with /getvar trckr or {{var::trckr}}.');
   } catch (error) {
     console.error('Error setting trckr variable:', error);
     st_echo('error', 'Failed to set trckr variable. Check console for details.');
