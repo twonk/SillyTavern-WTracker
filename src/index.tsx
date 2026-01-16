@@ -11,8 +11,6 @@ import { parseResponse } from './parser.js';
 import { schemaToExample } from './schema-to-example.js';
 import * as Handlebars from 'handlebars';
 import { POPUP_RESULT, POPUP_TYPE } from 'sillytavern-utils-lib/types/popup';
-// @ts-ignore - SillyTavern runtime module, handled by webpack externals
-import { setVariable } from "../../../../variables.js";
 // --- Constants and Globals ---
 const CHAT_METADATA_SCHEMA_PRESET_KEY = 'schemaKey';
 const CHAT_MESSAGE_SCHEMA_VALUE_KEY = 'value';
@@ -130,13 +128,10 @@ async function setTrckrVariable(messageId: number) {
   }
 
   const trackerData = message.extra[EXTENSION_KEY][CHAT_MESSAGE_SCHEMA_VALUE_KEY];
-  const context = SillyTavern.getContext();
   
-  setVariable('trckr', JSON.stringify(trackerData));
-
-  //context.chatMetadata.trckr = JSON.stringify(trackerData);
-  //context.saveMetadataDebounced();
-  st_echo('success', 'trckr variable set in chat metadata.');
+  // @ts-ignore - SillyTavern global function
+  globalThis.setVariable('trckr', JSON.stringify(trackerData));
+  st_echo('success', 'trckr variable set.');
 }
 
 async function editTracker(messageId: number) {
