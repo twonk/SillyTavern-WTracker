@@ -341,6 +341,8 @@ async function generateTracker(id: number) {
 
       // If render succeeds, save the chat
       await saveChat();
+      // Automatically set trckr variable with tracker data
+      await setTrckrVariable(id);
     } catch (renderError) {
       // If render fails, remove the tracker data we just added
       delete message.extra[EXTENSION_KEY];
