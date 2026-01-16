@@ -10,15 +10,19 @@
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
         "module": "NodeNext",
-        "moduleResolution": "nodenext",
-        "strict": true,
+        "moduleResolution": "NodeNext",
+        "strict": false,
         "isolatedModules": true,
         "noEmit": false,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "jsx": "react-jsx",
         "outDir": "./dist",
-        "rootDir": "./src"
+        "rootDir": "./src",
+        "baseUrl": ".",
+        "paths": {
+            "*": ["node_modules/*", "types/*"]
+        }
     },
     "include": [
         "src/**/*",

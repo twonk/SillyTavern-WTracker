@@ -11,6 +11,7 @@ import { parseResponse } from './parser.js';
 import { schemaToExample } from './schema-to-example.js';
 import * as Handlebars from 'handlebars';
 import { POPUP_RESULT, POPUP_TYPE } from 'sillytavern-utils-lib/types/popup';
+// @ts-ignore - SillyTavern runtime module, handled by webpack externals
 import { setVariable } from "../../../../variables.js";
 // --- Constants and Globals ---
 const CHAT_METADATA_SCHEMA_PRESET_KEY = 'schemaKey';

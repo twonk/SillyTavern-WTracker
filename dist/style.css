@@ -33,6 +33,7 @@
 }
 .mes_wtracker .wtracker-controls .wtracker-regenerate-button,
 .mes_wtracker .wtracker-controls .wtracker-edit-button,
+.mes_wtracker .wtracker-controls .wtracker-trckr-button,
 .mes_wtracker .wtracker-controls .wtracker-delete-button {
   cursor: pointer;
   color: var(--text_color);
@@ -41,6 +42,7 @@
 }
 .mes_wtracker .wtracker-controls .wtracker-regenerate-button:hover,
 .mes_wtracker .wtracker-controls .wtracker-edit-button:hover,
+.mes_wtracker .wtracker-controls .wtracker-trckr-button:hover,
 .mes_wtracker .wtracker-controls .wtracker-delete-button:hover {
   opacity: 1;
 }
