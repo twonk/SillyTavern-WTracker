@@ -130,10 +130,11 @@ async function setTrckrVariable(messageId: number) {
   const trackerData = message.extra[EXTENSION_KEY][CHAT_MESSAGE_SCHEMA_VALUE_KEY];
   
   try {
-    // Dynamically import setVariable from SillyTavern's variables.js module
+    // Dynamically import from SillyTavern's variables.js module
     // @ts-ignore - SillyTavern runtime module, handled by webpack externals
-    const { setVariable } = await import('../../../../variables.js');
-    setVariable('trckr', JSON.stringify(trackerData));
+    const variablesModule = await import('../../../../variables.js');
+    // @ts-ignore - Access setVariable from imported module
+    variablesModule.setVariable('trckr', JSON.stringify(trackerData));
     st_echo('success', 'trckr variable set. Access with /getvar trckr or {{var::trckr}}.');
   } catch (error) {
     console.error('Error setting trckr variable:', error);
