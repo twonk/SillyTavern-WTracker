@@ -11,7 +11,7 @@ import { parseResponse } from './parser.js';
 import { schemaToExample } from './schema-to-example.js';
 import * as Handlebars from 'handlebars';
 import { POPUP_RESULT, POPUP_TYPE } from 'sillytavern-utils-lib/types/popup';
-
+import { setVariable } from "../../../../variables.js";
 // --- Constants and Globals ---
 const CHAT_METADATA_SCHEMA_PRESET_KEY = 'schemaKey';
 const CHAT_MESSAGE_SCHEMA_VALUE_KEY = 'value';
@@ -60,6 +60,7 @@ function renderTracker(messageId: number) {
   controls.innerHTML = `
     <div class="wtracker-regenerate-button fa-solid fa-arrows-rotate" title="Regenerate Tracker"></div>
     <div class="wtracker-edit-button fa-solid fa-code" title="Edit Tracker Data"></div>
+    <div class="wtracker-trckr-button fa-solid fa-link" title="Set trckr Variable"></div>
     <div class="wtracker-delete-button fa-solid fa-trash-can" title="Delete Tracker"></div>
   `;
   container.prepend(controls);
@@ -119,6 +120,22 @@ async function deleteTracker(messageId: number) {
     renderTracker(messageId); // This will remove the rendered tracker
     st_echo('success', 'Tracker data deleted.');
   }
+}
+
+async function setTrckrVariable(messageId: number) {
+  const message = globalContext.chat[messageId];
+  if (!message?.extra?.[EXTENSION_KEY]?.[CHAT_MESSAGE_SCHEMA_VALUE_KEY]) {
+    return st_echo('error', 'No tracker data found for this message.');
+  }
+
+  const trackerData = message.extra[EXTENSION_KEY][CHAT_MESSAGE_SCHEMA_VALUE_KEY];
+  const context = SillyTavern.getContext();
+  
+  setVariable('trckr', JSON.stringify(trackerData));
+
+  context.chatMetadata.trckr = JSON.stringify(trackerData);
+  context.saveMetadataDebounced();
+  st_echo('success', 'trckr variable set in chat metadata.');
 }
 
 async function editTracker(messageId: number) {
@@ -364,6 +381,8 @@ async function initializeGlobalUI() {
       editTracker(messageId);
     } else if (target.classList.contains('wtracker-regenerate-button')) {
       generateTracker(messageId);
+    } else if (target.classList.contains('wtracker-trckr-button')) {
+      setTrckrVariable(messageId);
     } else if (target.classList.contains('wtracker-delete-button')) {
       deleteTracker(messageId);
     }
