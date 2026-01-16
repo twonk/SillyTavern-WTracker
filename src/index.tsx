@@ -129,9 +129,11 @@ async function setTrckrVariable(messageId: number) {
 
   const trackerData = message.extra[EXTENSION_KEY][CHAT_MESSAGE_SCHEMA_VALUE_KEY];
   
-  // @ts-ignore - SillyTavern global function
-  (window as any).setVariable('trckr', JSON.stringify(trackerData));
-  st_echo('success', 'trckr variable set.');
+  // Set trckr in chat metadata (accessible via {{chat_metadata.trckr}})
+  const context = SillyTavern.getContext();
+  context.chatMetadata.trckr = JSON.stringify(trackerData);
+  context.saveMetadataDebounced();
+  st_echo('success', 'trckr variable set in chat metadata. Use {{chat_metadata.trckr}} to access.');
 }
 
 async function editTracker(messageId: number) {
