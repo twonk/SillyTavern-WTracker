@@ -277,7 +277,7 @@ async function generateTracker(id: number) {
             onStart: (requestId) => {
               pendingRequests.set(id, requestId);
             },
-            onFinish: (data, error) => {
+            onFinish: (requestId, data, error) => {
               pendingRequests.delete(id);
               if (error) {
                 return reject(error);
